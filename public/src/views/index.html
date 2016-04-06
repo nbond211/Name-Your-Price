@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html ng-app="nypApp" lang="">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Bandcamp Web Crawler</title>
+    <link rel="shortcut icon" href="">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/lumen/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <!--[if IE]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body ng-controller="nypCtrl">
+
+    <div class="container-fluid">
+
+        <nav class="navbar navbar-default">
+            <div class="row">
+                <div class="col-md-3 pull-left">
+                    <img class="pull-left img-responsive" alt="Brand" src="/assets/img/NYP_title.png" style="width:350px;height:350px;">
+                </div>
+                <div class="col-md-6">
+                    <div class="row btn-row">
+                        <div class="col-md-12">
+                            <div class="well text-center">
+                                <button ng-class="{'btn-warning': !rock, 'btn-default': rock }" ng-click="hideAll(); rock = false" type="button" class="btn btn-default">rock</button>
+                                <button ng-class="{'btn-warning': !alternative, 'btn-default': alternative }" ng-click="hideAll(); alternative = false" type="button" class="btn">alternative</button>
+                                <button ng-class="{'btn-warning': !rap, 'btn-default': rap }" ng-click="hideAll(); rap = false" type="button" class="btn">hip-hop/rap</button>
+                                <button ng-class="{'btn-warning': !electronic, 'btn-default': electronic }" ng-click="hideAll(); electronic = false" type="button" class="btn">electronic</button>
+                                <button ng-class="{'btn-warning': !pop, 'btn-default': pop }" ng-click="hideAll(); pop = false" type="button" class="btn">pop</button>
+                                <button ng-class="{'btn-warning': !acoustic, 'btn-default': acoustic }" ng-click="hideAll(); acoustic = false" type="button" class="btn">acoustic</button>
+                                <button ng-class="{'btn-warning': !folk, 'btn-default': folk }" ng-click="hideAll(); folk = false" type="button" class="btn">folk</button>
+                                <button ng-class="{'btn-warning': !punk, 'btn-default': punk }" ng-click="hideAll(); punk = false" type="button" class="btn">punk</button>
+                                <button ng-class="{'btn-warning': !experimental, 'btn-default': experimental }" ng-click="hideAll(); experimental = false" type="button" class="btn">experimental</button>
+                                <button ng-class="{'btn-warning': !soul, 'btn-default': soul }" ng-click="hideAll(); soul = false" type="button" class="btn">r&b/soul</button>
+                                <button ng-class="{'btn-warning': !jazz, 'btn-default': jazz }" ng-click="hideAll(); jazz = false" type="button" class="btn">jazz</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-hide="rock" class="row btn-row">
+                        <div class="col-md-12">
+                            <div class="well text-center">
+                                <button ng-class="{'btn-primary': genre == 'rock', 'btn-default': genre != 'rock'}" ng-click="changeGenre('rock')" type="button" class="btn">all-rock</button>
+                                <button ng-class="{'btn-primary': genre == 'indie', 'btn-default': genre != 'indie'}" ng-click="changeGenre('indie')" type="button" class="btn btn-default">indie</button>
+                                <button ng-class="{'btn-primary': genre == 'rock-roll', 'btn-default': genre != 'rock-roll'}" ng-click="changeGenre('rock-roll')" type="button" class="btn btn-default">rock & roll</button>
+                                <button ng-class="{'btn-primary': genre == 'psychedelic-rock', 'btn-default': genre != 'psychedelic-rock'}" ng-click="changeGenre('psychedelic-rock')" type="button" class="btn btn-default">psychedelic rock</button>
+                                <button ng-class="{'btn-primary': genre == 'hard-rock', 'btn-default': genre != 'hard-rock'}" ng-click="changeGenre('hard-rock')" type="button" class="btn btn-default">hard rock</button>
+                                <button ng-class="{'btn-primary': genre == 'garage-rock', 'btn-default': genre != 'garage-rock'}" ng-click="changeGenre('garage-rock')" type="button" class="btn btn-default">garage rock</button>
+                                <button ng-class="{'btn-primary': genre == 'surf-rock', 'btn-default': genre != 'surf-rock'}" ng-click="changeGenre('surf-rock')" type="button" class="btn btn-default">surf rock</button>
+                                <button ng-class="{'btn-primary': genre == 'bedroom-rock', 'btn-default': genre != 'bedroom-rock'}" ng-click="changeGenre('bedroom-rock')" type="button" class="btn btn-default">bedroom rock</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-hide="alternative" class="row btn-row">
+                        <div class="col-md-12">
+                            <div class="well text-center">
+                                <button ng-class="{'btn-primary': genre == 'alternative', 'btn-default': genre != 'alternative'}" ng-click="changeGenre('alternative')" type="button" class="btn btn-default">all alternative</button>
+                                <button ng-class="{'btn-primary': genre == 'indie-rock', 'btn-default': genre != 'indie-rock'}" ng-click="changeGenre('indie-rock')" type="button" class="btn btn-default">indie rock</button>
+                                <button ng-class="{'btn-primary': genre == 'industrial', 'btn-default': genre != 'industrial'}" ng-click="changeGenre('industrial')" type="button" class="btn btn-default">industrial</button>
+                                <button ng-class="{'btn-primary': genre == 'shoegaze', 'btn-default': genre != 'shoegaze'}" ng-click="changeGenre('shoegaze')" type="button" class="btn btn-default">shoegaze</button>
+                                <button ng-class="{'btn-primary': genre == 'grunge', 'btn-default': genre != 'grunge'}" ng-click="changeGenre('grunge')" type="button" class="btn btn-default">grunge</button>
+                                <button ng-class="{'btn-primary': genre == 'dream-pop', 'btn-default': genre != 'dream-pop'}" ng-click="changeGenre('dream-pop')" type="button" class="btn btn-default">dream pop</button>
+                                <button ng-class="{'btn-primary': genre == 'britpop', 'btn-default': genre != 'britpop'}" ng-click="changeGenre('britpop')" type="button" class="btn btn-default">britpop</button>
+                                <button ng-class="{'btn-primary': genre == 'jangle-pop', 'btn-default': genre != 'jangle-pop'}" ng-click="changeGenre('jangle-pop')" type="button" class="btn btn-default">jangle pop</button>
+                                <button ng-class="{'btn-primary': genre == 'bedroom-pop', 'btn-default': genre != 'bedroom-pop'}" ng-click="changeGenre('bedroom-pop')" type="button" class="btn btn-default">bedroom pop</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-hide="rap" class="row btn-row">
+                        <div class="col-md-12">
+                            <div class="well text-center">
+                                <button ng-class="{'btn-primary': genre == 'hip-hop-rap', 'btn-default': genre != 'hip-hop-rap'}" ng-click="changeGenre('hip-hop-rap')" type="button" class="btn btn-default">all hip-hop/rap</button>
+                                <button ng-class="{'btn-primary': genre == 'rap', 'btn-default': genre != 'rap'}" ng-click="changeGenre('rap')" type="button" class="btn btn-default">rap</button>
+                                <button ng-class="{'btn-primary': genre == 'underground-hip-hop', 'btn-default': genre != 'underground-hip-hop'}" ng-click="changeGenre('underground-hip-hop')" type="button" class="btn btn-default">underground hip-hop</button>
+                                <button ng-class="{'btn-primary': genre == 'trap', 'btn-default': genre != 'trap'}" ng-click="changeGenre('trap')" type="button" class="btn btn-default">trap</button>
+                                <button ng-class="{'btn-primary': genre == 'boom-bap', 'btn-default': genre != 'boom-bap'}" ng-click="changeGenre('boom-bap')" type="button" class="btn btn-default">boom-bap</button>
+                                <button ng-class="{'btn-primary': genre == 'beat-tape', 'btn-default': genre != 'beat-tape'}" ng-click="changeGenre('beat-tape')" type="button" class="btn btn-default">beat-tape</button>
+                                <button ng-class="{'btn-primary': genre == 'hardcore-rap', 'btn-default': genre != 'hardcore-rap'}" ng-click="changeGenre('hardcore-rap')" type="button" class="btn btn-default">hardcore</button>
+                                <button ng-class="{'btn-primary': genre == 'grime', 'btn-default': genre != 'grime'}" ng-click="changeGenre('grime')" type="button" class="btn btn-default">grime</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-hide="electronic" class="row btn-row">
+                        <div class="col-md-12">
+                            <div class="well text-center">
+                                <button ng-class="{'btn-primary': genre == 'electronic', 'btn-default': genre != 'electronic'}" ng-click="changeGenre('electronic')" type="button" class="btn btn-default">all electronic</button>
+                                <button ng-class="{'btn-primary': genre == 'house', 'btn-default': genre != 'house'}" ng-click="changeGenre('house')" type="button" class="btn btn-default">house</button>
+                                <button ng-class="{'btn-primary': genre == 'electronica', 'btn-default': genre != 'electronica'}" ng-click="changeGenre('electronica')" type="button" class="btn btn-default">electronica</button>
+                                <button ng-class="{'btn-primary': genre == 'downtempo', 'btn-default': genre != 'downtempo'}" ng-click="changeGenre('downtempo')" type="button" class="btn btn-default">downtempo</button>
+                                <button ng-class="{'btn-primary': genre == 'techno', 'btn-default': genre != 'techno'}" ng-click="changeGenre('techno')" type="button" class="btn btn-default">techno</button>
+                                <button ng-class="{'btn-primary': genre == 'dubstep', 'btn-default': genre != 'dubstep'}" ng-click="changeGenre('dubstep')" type="button" class="btn btn-default">dubstep</button>
+                                <button ng-class="{'btn-primary': genre == 'dance', 'btn-default': genre != 'dance'}" ng-click="changeGenre('dance')" type="button" class="btn btn-default">dance</button>
+                                <button ng-class="{'btn-primary': genre == 'chiptune', 'btn-default': genre != 'chiptune'}" ng-click="changeGenre('chiptune')" type="button" class="btn btn-default">chiptune</button>
+                                <button ng-class="{'btn-primary': genre == 'chillwave', 'btn-default': genre != 'chillwave'}" ng-click="changeGenre('chillwave')" type="button" class="btn btn-default">chillwave</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-hide="pop" class="row btn-row">
+                        <div class="col-md-12">
+                            <div class="well text-center">
+                                <button ng-class="{'btn-primary': genre == 'pop', 'btn-default': genre != 'pop'}" ng-click="changeGenre('pop')" type="button" class="btn btn-default">all pop</button>
+                                <button ng-class="{'btn-primary': genre == 'indie-pop', 'btn-default': genre != 'indie-pop'}" ng-click="changeGenre('indie-pop')" type="button" class="btn btn-default">indie pop</button>
+                                <button ng-class="{'btn-primary': genre == 'synth-pop', 'btn-default': genre != 'synth-pop'}" ng-click="changeGenre('synth-pop')" type="button" class="btn btn-default">synth pop</button>
+                                <button ng-class="{'btn-primary': genre == 'power-pop', 'btn-default': genre != 'power-pop'}" ng-click="changeGenre('power-pop')" type="button" class="btn btn-default">power pop</button>
+                                <button ng-class="{'btn-primary': genre == 'new-wave', 'btn-default': genre != 'new-wave'}" ng-click="changeGenre('new-wave')" type="button" class="btn btn-default">new wave</button>
+                                <button ng-class="{'btn-primary': genre == 'dream-pop', 'btn-default': genre != 'dream-pop'}" ng-click="changeGenre('dream-pop')" type="button" class="btn btn-default">dream pop</button>
+                                <button ng-class="{'btn-primary': genre == 'noise-pop', 'btn-default': genre != 'noise-pop'}" ng-click="changeGenre('noise-pop')" type="button" class="btn btn-default">noise pop</button>
+                                <button ng-class="{'btn-primary': genre == 'experimental-pop', 'btn-default': genre != 'experimental-pop'}" ng-click="changeGenre('experimental-pop')" type="button" class="btn btn-default">experimental pop</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-hide="acoustic" class="row btn-row">
+                        <div class="col-md-12">
+                            <div class="well text-center">
+                                <button ng-class="{'btn-primary': genre == 'acoustic', 'btn-default': genre != 'acoustic'}" ng-click="changeGenre('acoustic')" type="button" class="btn btn-default">all acoustic</button>
+                                <button ng-class="{'btn-primary': genre == 'folk', 'btn-default': genre != 'folk'}" ng-click="changeGenre('folk')" type="button" class="btn btn-default">folk</button>
+                                <button ng-class="{'btn-primary': genre == 'singer-songwriter', 'btn-default': genre != 'singer-songwriter'}" ng-click="changeGenre('singer-songwriter')"  type="button" class="btn btn-default">singer-songwriter</button>
+                                <button ng-class="{'btn-primary': genre == 'acoustic-rock', 'btn-default': genre != 'acoustic-rock'}" ng-click="changeGenre('acoustic-rock')" type="button" class="btn btn-default">rock</button>
+                                <button ng-class="{'btn-primary': genre == 'bluegrass', 'btn-default': genre != 'bluegrass'}" ng-click="changeGenre('bluegrass')" type="button" class="btn btn-default">bluegrass</button>
+                                <button type="button" ng-class="{'btn-primary': genre == 'guitar', 'btn-default': genre != 'guitar'}" ng-click="changeGenre('guitar')" class="btn btn-default">guitar</button>
+                                <button ng-class="{'btn-primary': genre == 'americana', 'btn-default': genre != 'americana'}" ng-click="changeGenre('americana')" type="button" class="btn btn-default">americana</button>
+                                <button ng-class="{'btn-primary': genre == 'electro-acoustic', 'btn-default': genre != 'electro-acoustic'}" ng-click="changeGenre('electro-acoustic')" type="button" class="btn btn-default">electro-acoustic</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-hide="folk" class="row btn-row">
+                        <div class="col-md-12">
+                            <div class="well text-center">
+                                <button ng-class="{'btn-primary': genre == 'folk', 'btn-default': genre != 'folk'}" ng-click="changeGenre('folk')" type="button" class="btn btn-default">all folk</button>
+                                <button ng-class="{'btn-primary': genre == 'singer-songwriter', 'btn-default': genre != 'singer-songwriter'}" ng-click="changeGenre('singer-songwriter')" type="button" class="btn btn-default">singer-songwriter</button>
+                                <button ng-class="{'btn-primary': genre == 'folk-rock', 'btn-default': genre != 'folk-rock'}" ng-click="changeGenre('folk-rock')" type="button" class="btn btn-default">folk rock</button>
+                                <button ng-class="{'btn-primary': genre == 'indie-folk', 'btn-default': genre != 'indie-folk'}" ng-click="changeGenre('indie-folk')" type="button" class="btn btn-default">indie folk</button>
+                                <button ng-class="{'btn-primary': genre == 'pop-folk', 'btn-default': genre != 'pop-folk'}" ng-click="changeGenre('pop-folk')" type="button" class="btn btn-default">pop folk</button>
+                                <button ng-class="{'btn-primary': genre == 'traditional', 'btn-default': genre != 'traditional'}" ng-click="changeGenre('traditional')" type="button" class="btn btn-default">traditional</button>
+                                <button ng-class="{'btn-primary': genre == 'experimental-folk', 'btn-default': genre != 'experimental-folk'}" ng-click="changeGenre('experimental-folk')" type="button" class="btn btn-default">experimental folk</button>
+                                <button ng-class="{'btn-primary': genre == 'roots', 'btn-default': genre != 'roots'}" ng-click="changeGenre('roots')" type="button" class="btn btn-default">roots</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-hide="punk" class="row btn-row">
+                        <div class="col-md-12">
+                            <div class="well text-center">
+                                <button ng-class="{'btn-primary': genre == 'punk', 'btn-default': genre != 'punk'}" ng-click="changeGenre('punk')" type="button" class="btn btn-default">all punk</button>
+                                <button ng-class="{'btn-primary': genre == 'hardcore-punk', 'btn-default': genre != 'hardcore-punk'}" ng-click="changeGenre('hardcore-punk')" type="button" class="btn btn-default">hardcore punk</button>
+                                <button ng-class="{'btn-primary': genre == 'garage-punk', 'btn-default': genre != 'garage-punk'}" ng-click="changeGenre('garage-punk')" type="button" class="btn btn-default">garage</button>
+                                <button ng-class="{'btn-primary': genre == 'pop-punk', 'btn-default': genre != 'pop-punk'}" ng-click="changeGenre('pop-punk')" type="button" class="btn btn-default">pop punk</button>
+                                <button ng-class="{'btn-primary': genre == 'punk-rock', 'btn-default': genre != 'punk-rock'}" ng-click="changeGenre('punk-rock')" type="button" class="btn btn-default">punk rock</button>
+                                <button ng-class="{'btn-primary': genre == 'thrash', 'btn-default': genre != 'thrash'}" ng-click="changeGenre('thrash')" type="button" class="btn btn-default">thrash</button>
+                                <button ng-class="{'btn-primary': genre == 'folk-punk', 'btn-default': genre != 'folk-punk'}" ng-click="changeGenre('folk-punk')" type="button" class="btn btn-default">folk punk</button>
+                                <button ng-class="{'btn-primary': genre == 'no-wave', 'btn-default': genre != 'no-wave'}" ng-click="changeGenre('no-wave')" type="button" class="btn btn-default">no wave</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-hide="experimental" class="row btn-row">
+                        <div class="col-md-12">
+                            <div class="well text-center">
+                                <button ng-class="{'btn-primary': genre == 'experimental', 'btn-default': genre != 'experimental'}" ng-click="changeGenre('experimental')" type="button" class="btn btn-default">all experimental</button>
+                                <button ng-class="{'btn-primary': genre == 'noise', 'btn-default': genre != 'noise'}" ng-click="changeGenre('noise')" type="button" class="btn btn-default">noise</button>
+                                <button ng-class="{'btn-primary': genre == 'drone', 'btn-default': genre != 'drone'}" ng-click="changeGenre('drone')" type="button" class="btn btn-default">drone</button>
+                                <button ng-class="{'btn-primary': genre == 'avant-garde', 'btn-default': genre != 'avant-garde'}" ng-click="changeGenre('avant-garde')" type="button" class="btn btn-default">avant garde</button>
+                                <button ng-class="{'btn-primary': genre == 'experimental-rock', 'btn-default': genre != 'experimental-rock'}" ng-click="changeGenre('experimental-rock')" type="button" class="btn btn-default">experimental rock</button>
+                                <button ng-class="{'btn-primary': genre == 'improv', 'btn-default': genre != 'improv'}" ng-click="changeGenre('improv')" type="button" class="btn btn-default">improvisation</button>
+                                <button ng-class="{'btn-primary': genre == 'sound-art', 'btn-default': genre != 'sound-art'}" ng-click="changeGenre('sound-art')" type="button" class="btn btn-default">sound art</button>
+                                <button ng-class="{'btn-primary': genre == 'musique-concrete', 'btn-default': genre != 'musique-concrete'}" ng-click="changeGenre('musique-concrete')" type="button" class="btn btn-default">musique concrete</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-hide="soul" class="row btn-row">
+                        <div class="col-md-12">
+                            <div class="well text-center">
+                                <button ng-class="{'btn-primary': genre == 'r-b-soul', 'btn-default': genre != 'r-b-soul'}" ng-click="changeGenre('r-b-soul')" type="button" class="btn btn-default">all r&b/soul</button>
+                                <button ng-class="{'btn-primary': genre == 'soul', 'btn-default': genre != 'soul'}" ng-click="changeGenre('soul')" type="button" class="btn btn-default">soul</button>
+                                <button ng-class="{'btn-primary': genre == 'r-b', 'btn-default': genre != 'r-b'}" ng-click="changeGenre('r-b')" type="button" class="btn btn-default">r&b</button>
+                                <button ng-class="{'btn-primary': genre == 'neo-soul', 'btn-default': genre != 'neo-soul'}" ng-click="changeGenre('neo-soul')" type="button" class="btn btn-default">neo-soul</button>
+                                <button ng-class="{'btn-primary': genre == 'gospel', 'btn-default': genre != 'gospel'}" ng-click="changeGenre('gospel')" type="button" class="btn btn-default">gospel</button>
+                                <button ng-class="{'btn-primary': genre == 'contemporary-r-b', 'btn-default': genre != 'contemporary-r-b'}" ng-click="changeGenre('contemporary-r-b')" type="button" class="btn btn-default">contemporary r&b</button>
+                                <button ng-class="{'btn-primary': genre == 'motown', 'btn-default': genre != 'motown'}" ng-click="changeGenre('motown')" type="button" class="btn btn-default">motown</button>
+                                <button ng-class="{'btn-primary': genre == 'urban', 'btn-default': genre != 'urban'}" ng-click="changeGenre('urban')" type="button" class="btn btn-default">urban</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-hide="jazz" class="row btn-row">
+                        <div class="col-md-12">
+                            <div class="well text-center">
+                                <button ng-class="{'btn-primary': genre == 'jazz', 'btn-default': genre != 'jazz'}" ng-click="changeGenre('jazz')" type="button" class="btn btn-default">all jazz</button>
+                                <button ng-class="{'btn-primary': genre == 'fusion', 'btn-default': genre != 'fusion'}" ng-click="changeGenre('fusion')" type="button" class="btn btn-default">fusion</button>
+                                <button ng-class="{'btn-primary': genre == 'big-band', 'btn-default': genre != 'big-band'}" ng-click="changeGenre('big-band')" type="button" class="btn btn-default">big band</button>
+                                <button ng-class="{'btn-primary': genre == 'modern-jazz', 'btn-default': genre != 'modern-jazz'}" ng-click="changeGenre('modern-jazz')" type="button" class="btn btn-default">modern jazz</button>
+                                <button ng-class="{'btn-primary': genre == 'swing', 'btn-default': genre != 'swing'}" ng-click="changeGenre('swing')" type="button" class="btn btn-default">swing</button>
+                                <button ng-class="{'btn-primary': genre == 'free-jazz', 'btn-default': genre != 'free-jazz'}" ng-click="changeGenre('free-jazz')" type="button" class="btn btn-default">free jazz</button>
+                                <button ng-class="{'btn-primary': genre == 'vocal-jazz', 'btn-default': genre != 'vocal-jazz'}" ng-click="changeGenre('vocal-jazz')" type="button" class="btn btn-default">vocal jazz</button>
+                                <button ng-class="{'btn-primary': genre == 'bebop', 'btn-default': genre != 'bebop'}" ng-click="changeGenre('bebop')" type="button" class="btn btn-default">bebop</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row btn-row">
+                        <div class="col-md-12">
+                            <div class="well text-center">
+                                <button ng-click="pgBackward() ; redownloadData()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                                <button ng-class="{'btn-danger': sort == 'pop', 'btn-default': sort != 'pop'}" ng-click="sort = 'pop'; redownloadData()" type="button" class="btn btn-default">best-selling</button>
+                                <button ng-class="{'btn-danger': sort == 'date', 'btn-default': sort != 'date'}" ng-click="sort = 'date'; redownloadData()" type="button" class="btn btn-default">new arrivals</button>
+                                <button ng-click="pgForward() ; redownloadData()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 pull-right">
+                    <iframe class="pull-right" style="border: 0; width: 350px; height: 350px;" src="https://bandcamp.com/EmbeddedPlayer/album=2141664955/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/" seamless></iframe>
+                </div>
+            </div>
+        </nav>
+        
+        <div us-spinner="{radius:30, width:8, length: 16}"></div>
+
+        <ul>
+            <li ng-repeat="item in items">
+                <span>{{item.albumName}}</span>
+                <p>{{item.artistName}}</p>
+            </li>
+        </ul>
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/2.0.0-beta.13/http.min.js"></script>
+    <script type="text/javascript" src="http://fgnass.github.io/spin.js/spin.min.js"></script>
+    <script type="text/javascript" src="
+https://cdnjs.cloudflare.com/ajax/libs/angular-spinner/0.8.1/angular-spinner.js"></script>
+    <script type="text/javascript" src="/assets/js/angular-loading-spinner.js"></script>
+    <script src="/assets/js/nypApp.js"></script>
+</body>
+
+</html>
