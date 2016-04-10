@@ -2,9 +2,16 @@
 
 /* Controllers */
 
-var nypApp = angular.module('nypApp', ['ngLoadingSpinner']);
+var nypApp = angular.module('nypApp', ['ngLoadingSpinner'])
+    .config(function ($sceDelegateProvider) {
+        $sceDelegateProvider.resourceUrlWhitelist([
+     'self',
+     '*://www.bandcamp.com/**'
+   ]);
+    });
 
-nypApp.controller('nypCtrl', function ($scope, $http) {
+nypApp.controller('nypCtrl', function ($scope, $http, $sce) {
+
     $scope.alternative = true;
     $scope.rock = true;
     $scope.rap = true;
@@ -20,6 +27,7 @@ nypApp.controller('nypCtrl', function ($scope, $http) {
     $scope.genre = 'bedroom-pop';
     $scope.sort = 'pop';
     $scope.page = 1;
+    $scope.embedUrl;
 
     $http.post("/scrape", {
             genre: $scope.genre,
@@ -64,21 +72,28 @@ nypApp.controller('nypCtrl', function ($scope, $http) {
                 console.log("Error: " + results.status);
             });
     }
-    
-    $scope.changeGenre = function(newGenre) {
+
+    $scope.changeGenre = function (newGenre) {
         if (!($scope.genre == newGenre)) {
             $scope.genre = newGenre;
+            $scope.page = 1;
             $scope.redownloadData();
         }
     }
-    
-    $scope.pgForward = function() {
+
+    $scope.pgForward = function () {
         $scope.page++;
     }
-    
-    $scope.pgBackward = function(){
+
+    $scope.pgBackward = function () {
         if ($scope.page > 1) {
             $scope.pg--;
         }
     }
+
+    $scope.setEmbedUrl = function (id) {
+        $scope.embedUrl = $sce.trustAsResourceUrl("https://bandcamp.com/EmbeddedPlayer/album="+id+"/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/");
+        angular.element('#big_play_icon').trigger('click');
+    }
+
 });

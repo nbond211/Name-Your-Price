@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Bandcamp Web Crawler</title>
+    <title>Name Your Price</title>
     <link rel="shortcut icon" href="">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/lumen/bootstrap.min.css">
@@ -122,7 +122,7 @@
                             <div class="well text-center">
                                 <button ng-class="{'btn-primary': genre == 'acoustic', 'btn-default': genre != 'acoustic'}" ng-click="changeGenre('acoustic')" type="button" class="btn btn-default">all acoustic</button>
                                 <button ng-class="{'btn-primary': genre == 'folk', 'btn-default': genre != 'folk'}" ng-click="changeGenre('folk')" type="button" class="btn btn-default">folk</button>
-                                <button ng-class="{'btn-primary': genre == 'singer-songwriter', 'btn-default': genre != 'singer-songwriter'}" ng-click="changeGenre('singer-songwriter')"  type="button" class="btn btn-default">singer-songwriter</button>
+                                <button ng-class="{'btn-primary': genre == 'singer-songwriter', 'btn-default': genre != 'singer-songwriter'}" ng-click="changeGenre('singer-songwriter')" type="button" class="btn btn-default">singer-songwriter</button>
                                 <button ng-class="{'btn-primary': genre == 'acoustic-rock', 'btn-default': genre != 'acoustic-rock'}" ng-click="changeGenre('acoustic-rock')" type="button" class="btn btn-default">rock</button>
                                 <button ng-class="{'btn-primary': genre == 'bluegrass', 'btn-default': genre != 'bluegrass'}" ng-click="changeGenre('bluegrass')" type="button" class="btn btn-default">bluegrass</button>
                                 <button type="button" ng-class="{'btn-primary': genre == 'guitar', 'btn-default': genre != 'guitar'}" ng-click="changeGenre('guitar')" class="btn btn-default">guitar</button>
@@ -205,8 +205,8 @@
                         <div class="col-md-12">
                             <div class="well text-center">
                                 <button ng-click="pgBackward() ; redownloadData()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
-                                <button ng-class="{'btn-danger': sort == 'pop', 'btn-default': sort != 'pop'}" ng-click="sort = 'pop'; redownloadData()" type="button" class="btn btn-default">best-selling</button>
-                                <button ng-class="{'btn-danger': sort == 'date', 'btn-default': sort != 'date'}" ng-click="sort = 'date'; redownloadData()" type="button" class="btn btn-default">new arrivals</button>
+                                <button ng-class="{'btn-danger': sort == 'pop', 'btn-default': sort != 'pop'}" ng-click="sort = 'pop'; page = 1; redownloadData()" type="button" class="btn btn-default">best-selling</button>
+                                <button ng-class="{'btn-danger': sort == 'date', 'btn-default': sort != 'date'}" ng-click="sort = 'date'; page = 1; redownloadData()" type="button" class="btn btn-default">new arrivals</button>
                                 <button ng-click="pgForward() ; redownloadData()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
                             </div>
                         </div>
@@ -214,19 +214,33 @@
                 </div>
 
                 <div class="col-md-3 pull-right">
-                    <iframe class="pull-right" style="border: 0; width: 350px; height: 350px;" src="https://bandcamp.com/EmbeddedPlayer/album=2141664955/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/" seamless></iframe>
+                    <iframe class="pull-right" style="border: 0; width: 350px; height: 350px;" ng-src="{{embedUrl}}" seamless></iframe>
                 </div>
             </div>
         </nav>
-        
+    </div>
+
+    <div class="container-fluid">
+
         <div us-spinner="{radius:30, width:8, length: 16}"></div>
 
-        <ul>
-            <li ng-repeat="item in items">
-                <span>{{item.albumName}}</span>
-                <p>{{item.artistName}}</p>
-            </li>
-        </ul>
+        <div class="row">
+
+            <div ng-repeat="item in items" class="col-sm-6 col-md-3">
+
+                <div class="thumbnail">
+                    <a ng-click="setEmbedUrl(item.id)">
+                        <img ng-src="{{item.lgArtworkUrl}}">
+                        <div class="caption">
+                            <h3>{{item.albumName}}</h3>
+                            <p>{{item.artistName}}</p>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
