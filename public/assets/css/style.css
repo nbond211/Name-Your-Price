@@ -2,19 +2,11 @@
     padding-top: 20px;
 }
 
-.thumbnail {
-    position: relative;
-}
-
-.btn-play {
-    position: absolute;
-    top: 37%;
-    left: 42%;
-    width: 100%;
+.player {
     visibility: hidden;
 }
 
-.thumbnail:hover > .btn-play {
+.music-thumbnail:hover > span {
     visibility:visible;
 }
 
@@ -22,18 +14,3 @@
     cursor: pointer;
 }
 
-span.glyphicon-play {
-    font-size: 2.5em;
-    top: 25%;
-}
-
-.white, .white a {
-  color: #fff;
-}
-
-.label-play {
-    background: rgba(0, 0, 0, 0.5);
-    height: 70px;
-    width: 70px;
-    border-radius: 7%;
-}

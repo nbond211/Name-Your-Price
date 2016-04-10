@@ -229,8 +229,9 @@
             <div ng-repeat="item in items" class="col-sm-6 col-md-3">
 
                 <div class="thumbnail">
-                    <a ng-click="setEmbedUrl(item.id)">
+                    <a class="music-thumbnail" ng-click="setEmbedUrl(item.id)">
                         <img ng-src="{{item.lgArtworkUrl}}">
+                        <span class="player pull-right glyphicon glyphicon-new-window"></span>
                         <div class="caption">
                             <h3>{{item.albumName}}</h3>
                             <p>{{item.artistName}}</p>

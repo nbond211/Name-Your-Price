@@ -28,6 +28,7 @@ nypApp.controller('nypCtrl', function ($scope, $http, $sce) {
     $scope.sort = 'pop';
     $scope.page = 1;
     $scope.embedUrl;
+    $scope.embedId;
 
     $http.post("/scrape", {
             genre: $scope.genre,
@@ -93,7 +94,7 @@ nypApp.controller('nypCtrl', function ($scope, $http, $sce) {
 
     $scope.setEmbedUrl = function (id) {
         $scope.embedUrl = $sce.trustAsResourceUrl("https://bandcamp.com/EmbeddedPlayer/album="+id+"/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/");
-        angular.element('#big_play_icon').trigger('click');
+        $scope.embedId = id;
     }
 
 });
