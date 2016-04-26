@@ -1,3 +1,5 @@
+body { padding-top: 400px; }
+
 .btn-row {
     padding-top: 20px;
 }
@@ -12,5 +14,10 @@
 
 .thumbnail:hover {
     cursor: pointer;
+}
+
+.glyphicon-new-window {
+    font-size: 2em;
+    padding: 25px;
 }
 
