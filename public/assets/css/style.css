@@ -21,3 +21,13 @@ body { padding-top: 400px; }
     padding: 25px;
 }
 
+@media (max-width: 600px) {
+    nav {
+        height: 100px;
+    }
+    
+    body {
+        padding-top: 150px;
+    }
+}
+

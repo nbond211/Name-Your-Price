@@ -94,6 +94,7 @@ nypApp.controller('nypCtrl', function ($scope, $http, $sce) {
 
     $scope.setEmbedUrl = function (id) {
         $scope.embedUrl = $sce.trustAsResourceUrl("https://bandcamp.com/EmbeddedPlayer/album="+id+"/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/");
+        $scope.embedUrlSmall = $sce.trustAsResourceUrl("https://bandcamp.com/EmbeddedPlayer/album="+id+"/size=small/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/");
         $scope.embedId = id;
     }
 
