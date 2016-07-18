@@ -83,7 +83,9 @@ nypApp.controller('nypCtrl', function ($scope, $http, $sce) {
     }
 
     $scope.pgForward = function () {
-        $scope.page++;
+        if ($scope.page < 10) {
+           $scope.page++;  
+        }
     }
 
     $scope.pgBackward = function () {
@@ -91,10 +93,16 @@ nypApp.controller('nypCtrl', function ($scope, $http, $sce) {
             $scope.pg--;
         }
     }
+    
+    $scope.goToPage = function (newPage) {
+        if (newPage >= 1 && newPage <= 10) {
+            $scope.pg = newPage;
+        }
+    }
 
     $scope.setEmbedUrl = function (id) {
-        $scope.embedUrl = $sce.trustAsResourceUrl("https://bandcamp.com/EmbeddedPlayer/album="+id+"/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/");
-        $scope.embedUrlSmall = $sce.trustAsResourceUrl("https://bandcamp.com/EmbeddedPlayer/album="+id+"/size=small/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/");
+        $scope.embedUrl = $sce.trustAsResourceUrl("https://bandcamp.com/EmbeddedPlayer/album=" + id + "/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/");
+        $scope.embedUrlSmall = $sce.trustAsResourceUrl("https://bandcamp.com/EmbeddedPlayer/album=" + id + "/size=small/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/");
         $scope.embedId = id;
     }
 
