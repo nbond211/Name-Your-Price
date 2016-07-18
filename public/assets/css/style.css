@@ -14,18 +14,27 @@
     cursor: pointer;
 }
 
-.glyphicon-new-window {
+.glyphicon-play-circle {
     font-size: 2em;
     padding: 25px;
 }
 
-@media (max-width: 600px) {
-    nav {
-        height: 100px;
-    }
-    
-    body {
-        padding-top: 150px;
-    }
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+  z-index: 1000;
+}
+
+.small-player {
+    position: relative;
+    top: 15%;
 }
 
