@@ -90,13 +90,13 @@ nypApp.controller('nypCtrl', function ($scope, $http, $sce) {
 
     $scope.pgBackward = function () {
         if ($scope.page > 1) {
-            $scope.pg--;
+            $scope.page--;
         }
     }
     
     $scope.goToPage = function (newPage) {
         if (newPage >= 1 && newPage <= 10) {
-            $scope.pg = newPage;
+            $scope.page = newPage;
         }
     }
 
