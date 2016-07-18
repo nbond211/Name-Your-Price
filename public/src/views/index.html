@@ -209,9 +209,25 @@
                         <div class="row btn-row">
                             <div class="col-md-12">
                                 <div class="well text-center">
-                                    <button ng-click="pgBackward() ; redownloadData()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
                                     <button ng-class="{'btn-danger': sort == 'pop', 'btn-default': sort != 'pop'}" ng-click="sort = 'pop'; page = 1; redownloadData()" type="button" class="btn btn-default">best-selling</button>
                                     <button ng-class="{'btn-danger': sort == 'date', 'btn-default': sort != 'date'}" ng-click="sort = 'date'; page = 1; redownloadData()" type="button" class="btn btn-default">new arrivals</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row btn-row">
+                            <div class="col-md-12">
+                                <div class="well text-center">
+                                    <button ng-click="pgBackward() ; redownloadData()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                                    <button ng-class="{'btn-success': page == 1, 'btn-default': page != 1 }" ng-click="goToPage(1); redownloadData()" type="button" class="btn">1</button>
+                                    <button ng-class="{'btn-success': page == 2, 'btn-default': psge != 2 }" ng-click="goToPage(2); redownloadData()" type="button" class="btn">2</button>
+                                    <button ng-class="{'btn-success': page == 3, 'btn-default': page != 3 }" ng-click="goToPage(3); redownloadData()" type="button" class="btn">3</button>
+                                    <button ng-class="{'btn-success': page == 4, 'btn-default': page != 4 }" ng-click="goToPage(4); redownloadData()" type="button" class="btn">4</button>
+                                    <button ng-class="{'btn-success': page == 5, 'btn-default': page != 5 }" ng-click="goToPage(5); redownloadData()" type="button" class="btn">5</button>
+                                    <button ng-class="{'btn-success': page == 6, 'btn-default': page != 6 }" ng-click="goToPage(6); redownloadData()" type="button" class="btn">6</button>
+                                    <button ng-class="{'btn-success': page == 7, 'btn-default': page != 7 }" ng-click="goToPage(7); redownloadData()" type="button" class="btn">7</button>
+                                    <button ng-class="{'btn-success': page == 8, 'btn-default': page != 8 }" ng-click="goToPage(8); redownloadData()" type="button" class="btn">8</button>
+                                    <button ng-class="{'btn-success': page == 9, 'btn-default': page != 9 }" ng-click="goToPage(9); redownloadData()" type="button" class="btn">9</button>
+                                    <button ng-class="{'btn-success': page == 10, 'btn-default': page != 10 }" ng-click="goToPage(10); redownloadData()" type="button" class="btn">10</button>
                                     <button ng-click="pgForward() ; redownloadData()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
                                 </div>
                             </div>
