@@ -10,7 +10,6 @@
     <link rel="shortcut icon" href="">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/lumen/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css">
 
     <link rel="stylesheet" href="/assets/css/style.css">
 
@@ -32,21 +31,21 @@
             </button>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
+                    <div class="col-md-12">
                         <div class="row btn-row">
                             <div class="col-md-12">
                                 <div class="well text-center">
-                                    <button ng-class="{'btn-warning': !rock, 'btn-default': rock }" ng-click="hideAll(); rock = false" type="button" class="btn btn-default">rock</button>
-                                    <button ng-class="{'btn-warning': !alternative, 'btn-default': alternative }" ng-click="hideAll(); alternative = false" type="button" class="btn">alternative</button>
-                                    <button ng-class="{'btn-warning': !rap, 'btn-default': rap }" ng-click="hideAll(); rap = false" type="button" class="btn">hip-hop/rap</button>
-                                    <button ng-class="{'btn-warning': !electronic, 'btn-default': electronic }" ng-click="hideAll(); electronic = false" type="button" class="btn">electronic</button>
-                                    <button ng-class="{'btn-warning': !pop, 'btn-default': pop }" ng-click="hideAll(); pop = false" type="button" class="btn">pop</button>
-                                    <button ng-class="{'btn-warning': !acoustic, 'btn-default': acoustic }" ng-click="hideAll(); acoustic = false" type="button" class="btn">acoustic</button>
-                                    <button ng-class="{'btn-warning': !folk, 'btn-default': folk }" ng-click="hideAll(); folk = false" type="button" class="btn">folk</button>
-                                    <button ng-class="{'btn-warning': !punk, 'btn-default': punk }" ng-click="hideAll(); punk = false" type="button" class="btn">punk</button>
-                                    <button ng-class="{'btn-warning': !experimental, 'btn-default': experimental }" ng-click="hideAll(); experimental = false" type="button" class="btn">experimental</button>
-                                    <button ng-class="{'btn-warning': !soul, 'btn-default': soul }" ng-click="hideAll(); soul = false" type="button" class="btn">r&b/soul</button>
-                                    <button ng-class="{'btn-warning': !jazz, 'btn-default': jazz }" ng-click="hideAll(); jazz = false" type="button" class="btn">jazz</button>
+                                    <button ng-class="{'btn-warning': !rock, 'btn-default': rock }" ng-click="hideAll(); rock = false; changeGenre('rock')" type="button" class="btn btn-default">rock</button>
+                                    <button ng-class="{'btn-warning': !alternative, 'btn-default': alternative }" ng-click="hideAll(); alternative = false; changeGenre('alternative')" type="button" class="btn">alternative</button>
+                                    <button ng-class="{'btn-warning': !rap, 'btn-default': rap }" ng-click="hideAll(); rap = false; changeGenre('rap')" type="button" class="btn">hip-hop/rap</button>
+                                    <button ng-class="{'btn-warning': !electronic, 'btn-default': electronic }" ng-click="hideAll(); electronic = false; changeGenre('electronic')" type="button" class="btn">electronic</button>
+                                    <button ng-class="{'btn-warning': !pop, 'btn-default': pop }" ng-click="hideAll(); pop = false; changeGenre('pop')" type="button" class="btn">pop</button>
+                                    <button ng-class="{'btn-warning': !acoustic, 'btn-default': acoustic }" ng-click="hideAll(); acoustic = false; changeGenre('acoustic')" type="button" class="btn">acoustic</button>
+                                    <button ng-class="{'btn-warning': !folk, 'btn-default': folk }" ng-click="hideAll(); folk = false; changeGenre('folk')" type="button" class="btn">folk</button>
+                                    <button ng-class="{'btn-warning': !punk, 'btn-default': punk }" ng-click="hideAll(); punk = false; changeGenre('punk')" type="button" class="btn">punk</button>
+                                    <button ng-class="{'btn-warning': !experimental, 'btn-default': experimental }" ng-click="hideAll(); experimental = false; changeGenre('experimental')" type="button" class="btn">experimental</button>
+                                    <button ng-class="{'btn-warning': !soul, 'btn-default': soul }" ng-click="hideAll(); soul = false; changeGenre('r-b')" type="button" class="btn">r&b/soul</button>
+                                    <button ng-class="{'btn-warning': !jazz, 'btn-default': jazz }" ng-click="hideAll(); jazz = false; changeGenre('jazz')" type="button" class="btn">jazz</button>
                                 </div>
                             </div>
                         </div>
